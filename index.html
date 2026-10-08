@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mahasri K T — Aspiring Full Stack & Web Developer">
+  <title>Mahasri K T — Developer Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/fx.css">
+</head>
+<body>
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <canvas id="space" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#certificates">Certificates</a><a href="#education">Education</a><a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section-pad">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="status-dot"></span> ASPIRING FULL STACK &amp; WEB DEVELOPER</p>
+        <p class="greet">Hello, I am</p>
+        <h1>Mahasri<br><em>K T</em></h1>
+        <p class="role">B.Tech Artificial Intelligence and Data Science Student</p>
+        <p class="intro">I enjoy learning Python, exploring Artificial Intelligence and Data Science, and turning ideas into web projects. Right now I am growing from AI and data work towards full stack web development.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#projects">View My Projects <span>↗</span></a>
+          <a class="button ghost" href="assets/MahasriRESUME.pdf" download>Download Resume <span>↓</span></a>
+        </div>
+        
+      </div>
+
+      <div class="hero-visual reveal delay-1" data-tilt>
+        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+        <div class="photo-frame">
+          <img src="images/profile-shoulders.png" alt="Mahasri K T" class="profile-photo">
+          <div class="frame-corner tl"></div><div class="frame-corner br"></div>
+        </div>
+        <div class="floating-note note-top">learning → building</div>
+        <div class="floating-note note-bottom">crafted, not generated</div>
+      </div>
+    </section>
+
+    <section id="about" class="section-pad section about">
+      <div class="section-heading reveal"><span>ABOUT</span><h2>A little about me.</h2></div>
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <p class="large">I  am  Mahasri  K  T, a B.Tech Artificial Intelligence and Data Science student with a strong interest in Full Stack Development and Web Development.</p>
+          <p>I enjoy learning technologies, building practical projects and improving my development skills through hands-on experience. I’m still growing — and that is part of what makes this space mine.</p>
+        </div>
+        <div class="timeline-card reveal delay-1">
+          <div class="mini-label">MY DIRECTION</div>
+          <div class="mini-timeline">
+            <div><b>01</b><span>AI &amp; Data Science</span></div><i></i>
+            <div><b>02</b><span>Web Development</span></div><i></i>
+            <div class="active"><b>03</b><span>Full Stack Development</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section-pad section">
+      <div class="section-heading reveal"><span>SKILLS</span><h2>Things I’m learning by doing.</h2></div>
+      <div class="skill-grid">
+        <article class="skill-card reveal" data-skill="Python — scripting, data work and AI exploration."><small>PROGRAMMING</small><h3>Python</h3></article>
+        <article class="skill-card reveal delay-1" data-skill="Java — programming practice and application development."><small>PROGRAMMING</small><h3>Java</h3></article>
+        <article class="skill-card reveal delay-2" data-skill="HTML — semantic structure for web interfaces."><small>WEB</small><h3>HTML</h3></article>
+        <article class="skill-card reveal" data-skill="CSS — layout, responsive design and visual interaction."><small>WEB</small><h3>CSS</h3></article>
+        <article class="skill-card reveal delay-1" data-skill="JavaScript — making interfaces interactive and dynamic."><small>WEB</small><h3>JavaScript</h3></article>
+        <article class="skill-card reveal delay-2" data-skill="PostgreSQL / SQL — working with structured application data."><small>DATABASE</small><h3>SQL</h3></article>
+        <article class="skill-card reveal" data-skill="VS Code — my everyday coding workspace."><small>TOOLS</small><h3>VS Code</h3></article>
+        <article class="skill-card reveal delay-1" data-skill="Git & GitHub — version control and project collaboration."><small>TOOLS</small><h3>Git / GitHub</h3></article>
+      </div>
+      <div id="skill-tip" class="skill-tip" aria-live="polite"></div>
+    </section>
+
+    <section id="projects" class="section-pad section projects">
+      <div class="section-heading reveal"><span> PROJECTS</span><h2>Built while figuring things out.</h2></div>
+      <div class="proj-grid">
+        <article class="pcard reveal" data-id="careergap">
+          <div class="thumb t-career"><i style="--w:82%"></i><i style="--w:55%"></i><i style="--w:30%"></i><b>readiness</b></div>
+          <div class="pbody"><h3>CareerGap AI</h3>
+            <p>Pick a career and see which skills are missing. It scores your readiness and builds a personalized learning roadmap with a next skill and a project to try.</p>
+            <div class="tag-row"><span>Python</span><span>Flask</span><span>NLP</span><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <p class="status">Sample Live Demo · frontend preview</p>
+            <div class="pactions"><a class="pbtn live" href="demo/careergap.html" target="_blank" rel="noopener">Live Demo</a><a class="pbtn git" href="https://github.com/maha-6380" data-repo="YOUR_GITHUB_REPOSITORY_URL" target="_blank" rel="noopener noreferrer">GitHub</a><button class="plink" data-details="careergap">View Project Details</button></div></div>
+        </article>
+        <article class="pcard reveal delay-1" data-id="apart">
+          <div class="thumb t-apart"><em></em><em></em><em></em><em></em><b>/api/compliance</b></div>
+          <div class="pbody"><h3>APART</h3>
+            <p>Animal Product &amp; Antibiotic Residue Tracking System. Backend APIs for animal, treatment, drug and compliance data.</p>
+            <div class="tag-row"><span>Node.js</span><span>Express.js</span><span>PostgreSQL</span><span>Prisma</span></div>
+            <p class="status">Demo Preview · frontend only</p>
+            <div class="pactions"><a class="pbtn live" href="demo/apart.html" target="_blank" rel="noopener">Live Demo</a><a class="pbtn git" href="https://github.com/maha-6380" data-repo="YOUR_GITHUB_REPOSITORY_URL" target="_blank" rel="noopener noreferrer">GitHub</a><button class="plink" data-details="apart">View Project Details</button></div></div>
+        </article>
+        <article class="pcard reveal delay-2" data-id="upi">
+          <div class="thumb t-upi"><span>₹</span><b>risk check</b></div>
+          <div class="pbody"><h3>UPI Fraud Detection</h3>
+            <p>A mini project exploring potentially fraudulent UPI transactions with machine learning techniques and transaction data analysis.</p>
+            <div class="tag-row"><span>Python</span><span>Machine Learning</span><span>Data Analysis</span></div>
+            <p class="status">Demo Preview · rule-based, not the trained model</p>
+            <div class="pactions"><a class="pbtn live" href="demo/upi-fraud.html" target="_blank" rel="noopener">Live Demo</a><a class="pbtn git" href="https://github.com/maha-6380" data-repo="YOUR_GITHUB_REPOSITORY_URL" target="_blank" rel="noopener noreferrer">GitHub</a><button class="plink" data-details="upi">View Project Details</button></div></div>
+        </article>
+      </div>
+      <p class="proj-note">None of these projects is deployed yet, so each Live Demo is a sample built inside this portfolio with made-up data. GitHub buttons open my GitHub profile until each repository link is added in <code>js/script.js</code>.</p>
+    </section>
+
+    <section id="experience" class="section-pad section split-section">
+      <div class="section-heading reveal"><span>EXPERIENCE</span><h2>Where I got hands-on.</h2></div>
+      <div class="experience-list">
+        <div class="experience-item reveal"><span>01</span><div><small>2026</small><h3>NxtLogic Software Solution</h3><p>Web Development Internship</p></div></div>
+        <div class="experience-item reveal delay-1"><span>02</span><div><small>2025–26</small><h3>Study Shine Software Solution</h3><p>Java Internship / Experience</p></div></div>
+      </div>
+    </section>
+
+    <section id="certificates" class="section-pad section certificates">
+      <div class="section-heading reveal"><span>CERTIFICATES</span><h2>Proof of learning.</h2></div>
+      <div class="cert-grid">
+        <article class="cert-card reveal" data-cert="certificates/certificate-2.pdf" data-title="NxtLogic Software Solutions — Web Development"><div class="cert-image"><img src="certificates/cert2-preview.png" alt="NxtLogic Web Development certificate"></div><div class="cert-info"><small>NXTLOGIC SOFTWARE SOLUTIONS</small><h3>Web Development</h3><button class="view-cert">View Full Certificate ↗</button></div></article>
+        <article class="cert-card reveal delay-1" data-cert="certificates/certificate-1.pdf" data-title="Study Shine — Java Internship"><div class="cert-image"><img src="certificates/cert1-preview.png" alt="Study Shine Java certificate"></div><div class="cert-info"><small>STUDY SHINE</small><h3>Java Internship / Project Completion</h3><button class="view-cert">View Full Certificate ↗</button></div></article>
+        <article class="cert-card reveal delay-2" data-cert="certificates/data-science-python.pdf" data-title="SmartED Innovations — Data Science With Python"><div class="cert-image"><img src="certificates/data-science-preview.png" alt="SmartED Data Science with Python certificate"></div><div class="cert-info"><small>SMARTED INNOVATIONS</small><h3>Data Science With Python</h3><button class="view-cert">View Full Certificate ↗</button></div></article>
+        <article class="cert-card reveal" data-cert="certificates/cloud-computing.pdf" data-title="NPTEL — Cloud Computing"><div class="cert-image"><img src="certificates/cloud-preview.png" alt="NPTEL Cloud Computing certificate"></div><div class="cert-info"><small>NPTEL / IIT KHARAGPUR</small><h3>Cloud Computing</h3><button class="view-cert">View Full Certificate ↗</button></div></article>
+      </div>
+    </section>
+
+    <section id="education" class="section-pad section education">
+      <div class="section-heading reveal"><span>EDUCATION</span><h2>The foundation underneath.</h2></div>
+      <div class="edu-list">
+        <article class="edu-item reveal"><div class="edu-year">NOW</div><div><h3>VSB College of Engineering Technical Campus</h3><p>B.Tech — Artificial Intelligence &amp; Data Science</p></div><strong>8.67 CGPA</strong></article>
+        <article class="edu-item reveal delay-1"><div class="edu-year">2023–24</div><div><h3>Vighneswar Vidhya Mandhir Matric Hr Sec School</h3><p>HSE</p></div><strong>84%</strong></article>
+        <article class="edu-item reveal delay-2"><div class="edu-year">2021–22</div><div><h3>Vighneswar Vidhya Mandhir Matric Hr Sec School</h3><p>SSLC</p></div><strong>78%</strong></article>
+      </div>
+    </section>
+
+    <section class="section-pad section journey">
+      <div class="section-heading reveal"><span>JOURNEY</span><h2>My Development Journey.</h2></div>
+      <div class="journey-path">
+        <div class="journey-node reveal"><b>01</b><span>AI &amp; Data Science</span></div><i></i><div class="journey-node reveal delay-1"><b>02</b><span>Programming</span></div><i></i><div class="journey-node reveal delay-2"><b>03</b><span>Web Development</span></div><i></i><div class="journey-node reveal"><b>04</b><span>Full Stack Development</span></div><i></i><div class="journey-node reveal delay-1 future"><b>05</b><span>Future Projects</span></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-pad section contact">
+      <div class="contact-card reveal">
+        <div><span class="eyebrow">CONTACT</span><h2>Let’s build something together.</h2><p>If you have a project idea, collaboration, internship opportunity or just want to say hello, reach out.</p><div class="contact-details"><a href="mailto:mahasri9871@gmail.com">mahasri9871@gmail.com</a><a href="https://github.com/maha-6380" target="_blank" rel="noreferrer">github.com/maha-6380</a><a href="https://www.linkedin.com/in/mahasri007" target="_blank" rel="noreferrer">linkedin.com/in/mahasri007</a></div></div>
+        <form id="contact-form"><label>Name<input name="name" required placeholder="Your name"></label><label>Email<input type="email" name="email" required placeholder="you@example.com"></label><label>Message<textarea name="message" rows="5" required placeholder="Tell me what you’re building..."></textarea></label><button class="button primary" type="submit">Send Message <span>↗</span></button><p class="form-note">The form opens your email app; no paid backend is used.</p></form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>© 2026 Mahasri K T</span><span>Designed &amp; built by MAHASRI</span><span><a href="https://www.linkedin.com/in/mahasri007" target="_blank" rel="noreferrer">LinkedIn ↗</a> · <a href="https://github.com/maha-6380" target="_blank" rel="noreferrer">GitHub ↗</a></span></footer>
+
+  <div class="modal" id="cert-modal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-top"><h3 id="modal-title">Certificate</h3><button id="close-modal" aria-label="Close">×</button></div><iframe id="cert-frame" title="Certificate viewer"></iframe><div class="modal-actions"><a id="open-pdf" class="button primary" target="_blank" rel="noreferrer">Open PDF in New Tab ↗</a><button id="close-modal-bottom" class="button ghost">Close</button></div></div></div>
+  <div class="modal" id="proj-modal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-panel pm" role="dialog" aria-modal="true" aria-labelledby="pm-title"><div class="modal-top"><h3 id="pm-title"></h3><button id="pm-close" aria-label="Close">×</button></div><div class="pm-body" id="pm-body"></div></div></div>
+  <script src="js/three.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/fx.js"></script>
+</body>
+</html>

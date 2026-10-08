@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UPI Fraud Detection · Demo Preview</title><link rel="stylesheet" href="demo.css"></head><body>
+<div class="banner"><span><b>Demo Preview – Frontend Preview.</b> This uses simple hand-written rules and made-up transactions. It is not the trained machine learning model.</span><a href="../index.html#projects">← Back to portfolio</a></div>
+<div class="wrap"><h1>UPI Fraud Detection</h1><p class="sub">Enter a sample transaction to see how a risk check might flag it.</p>
+<div class="grid"><form class="card" id="f"><h2>Sample transaction</h2><label>Amount (₹)</label><input type="number" id="amt" min="1" value="2500"><label>Hour of day (0–23)</label><input type="number" id="hr" min="0" max="23" value="14">
+<label>Receiver</label><select id="rc"><option value="0">Saved contact</option><option value="1">New receiver</option></select><label>Device</label><select id="dv"><option value="0">Usual device</option><option value="1">New device</option></select>
+<div class="row" style="margin-top:16px"><button class="btn" id="go">Check risk</button><span class="spin" id="sp"></span></div><div class="msg" id="m"></div></form>
+<div class="card"><h2>Result</h2><div id="out" style="color:var(--mut)">Run a check to see the risk score.</div><h2 style="margin-top:24px">Made-up recent transactions</h2><div class="scroll"><table><thead><tr><th>Amount</th><th>Hour</th><th>Receiver</th><th>Flag</th></tr></thead><tbody id="tb"></tbody></table></div></div></div></div>
+<script>
+const $=i=>document.getElementById(i);
+function risk(a,h,r,d){let s=0,w=[];if(a>=20000){s+=40;w.push('large amount')}else if(a>=5000){s+=15;w.push('above-usual amount')}if(h<5){s+=20;w.push('late-night hour')}if(r){s+=20;w.push('new receiver')}if(d){s+=25;w.push('new device')}return[Math.min(s,100),w]}
+const T=[[450,13,0,0],[18000,2,1,1],[1200,19,0,0],[7500,23,1,0]];
+$('tb').innerHTML=T.map(t=>{const[s]=risk(...t);return`<tr><td>₹${t[0]}</td><td>${t[1]}:00</td><td>${t[2]?'New':'Saved'}</td><td><span class="pill ${s>=50?'r':s>=30?'y':'g'}">${s>=50?'Suspicious':s>=30?'Review':'Looks normal'}</span></td></tr>`}).join('');
+$('f').onsubmit=e=>{e.preventDefault();const m=$('m'),a=+$('amt').value,h=+$('hr').value;m.className='msg';
+ if(!(a>0)||!(h>=0&&h<=23)||!Number.isInteger(h)){m.textContent='Enter an amount above 0 and a whole hour from 0 to 23.';m.className='msg err show';return}
+ $('go').disabled=true;$('sp').classList.add('on');setTimeout(()=>{$('go').disabled=false;$('sp').classList.remove('on');const[s,w]=risk(a,h,+$('rc').value,+$('dv').value),k=s>=50?['r','Potentially fraudulent']:s>=30?['y','Needs review']:['g','Looks normal'];
+ $('out').innerHTML=`<div class="row"><span class="pill ${k[0]}">${k[1]}</span><b>Risk score ${s}/100</b></div><div class="bar" style="margin:12px 0"><i style="width:${s}%"></i></div><p style="margin:0;color:var(--mut)">${w.length?'Triggers: '+w.join(', ')+'.':'No rules triggered.'}</p>`},800)};
+</script></body></html>

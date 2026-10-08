@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CareerGap AI · Sample Demo</title><link rel="stylesheet" href="demo.css">
+<style>.ring{--p:0;width:130px;height:130px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--cy) calc(var(--p)*1%),rgba(255,255,255,.08) 0);transition:.8s}.ring b{width:104px;height:104px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:26px}
+.res{display:none}.res.on{display:block}.g2{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center}@media(max-width:560px){.g2{grid-template-columns:1fr}}
+ol.road{padding-left:20px;margin:0}ol.road li{margin-bottom:8px}.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border-radius:8px;border:1px solid var(--line);background:#081022;color:var(--text);cursor:pointer;font:inherit}.opt.right{border-color:var(--ok)}.opt.wrong{border-color:var(--bad)}</style></head><body>
+<div class="banner"><span><b>Sample Demo – Frontend Preview.</b> Made-up data and simple rules run in your browser. This is not the deployed CareerGap AI project.</span><a href="../index.html#projects">← Back to portfolio</a></div>
+<div class="wrap"><h1>CareerGap AI</h1><p class="sub">Mini Skill Gap Analyzer · rate your current skills and see what to learn next.</p>
+<div class="grid"><form class="card" id="f"><h2>1. Choose a role</h2><select id="role"></select>
+<h2 style="margin-top:20px">2. Rate your skills <small style="color:var(--mut);font-weight:400">(sample profile preloaded)</small></h2><div class="skills" id="sk"></div>
+<div class="row" style="margin-top:18px"><button class="btn" id="go">Analyze my gap</button><button type="button" class="btn alt" id="clr">Clear all</button><span class="spin" id="sp"></span></div><div class="msg" id="m"></div></form>
+<div><div class="card res" id="res"><div class="g2"><div class="ring" id="ring"><b id="rv">0%</b></div><div><h2 id="rt"></h2><p id="rs" style="color:var(--mut);margin:0"></p></div></div>
+<h2 style="margin-top:22px">Skill gaps</h2><div id="gaps"></div>
+<div class="grid" style="grid-template-columns:1fr 1fr;margin-top:18px"><div><h2>Next skill</h2><p id="nx"></p></div><div><h2>Recommended project</h2><p id="pj"></p></div></div>
+<h2>Learning roadmap</h2><ol class="road" id="rd"></ol><div class="row" style="margin-top:14px"><button class="btn alt" id="sv">Save roadmap</button><button class="btn" id="qz">Take skill assessment</button></div><div class="msg" id="m2"></div></div>
+<div class="card res" id="quiz" style="margin-top:18px"><h2 id="qh"></h2><div id="qb"></div></div>
+<div class="card" id="empty"><h2>Your results appear here</h2><p style="color:var(--mut);margin:0">Pick a role, rate your skills and press “Analyze my gap”.</p></div></div></div></div>
+<script>
+const LV=['Not yet','Beginner','Intermediate','Advanced'];
+const ROLES={'Data Analyst':{req:['Python','SQL','Statistics','Data Visualization','Excel'],proj:'Build a sales dashboard from a public CSV with SQL queries and charts.'},
+'Web Developer':{req:['HTML','CSS','JavaScript','Git','React'],proj:'Build a responsive to-do app with JavaScript, then host it on GitHub Pages.'},
+'ML Engineer':{req:['Python','Statistics','Machine Learning','SQL','Git'],proj:'Train and compare two classifiers on a small public dataset.'}};
+const TOPIC={Python:'functions, lists/dicts, files, then pandas',SQL:'SELECT, JOIN, GROUP BY, subqueries',Statistics:'mean/variance, distributions, hypothesis tests',['Data Visualization']:'choose charts, matplotlib basics',Excel:'formulas, pivot tables',HTML:'semantic tags, forms',CSS:'flexbox, grid, responsive layouts',JavaScript:'DOM, events, fetch, async',Git:'commit, branch, merge, pull requests',React:'components, props, state',['Machine Learning']:'train/test split, regression, classification',['Node.js']:'Express routes, REST APIs'};
+const QS={Python:[['What does len([1,2,3]) return?',['2','3','4'],1],['Which keyword defines a function?',['def','func','fn'],0]],SQL:[['Which clause filters rows?',['WHERE','ORDER','LIMIT'],0],['Which joins rows from two tables on a key?',['JOIN','MERGE ALL','UNION KEY'],0]],JavaScript:[['Which method selects an element by id?',['getElementById','queryId','findId'],0],['What does === check?',['value only','value and type','type only'],1]],Statistics:[['The median is…',['the average','the middle value','the most common'],1],['Standard deviation measures…',['spread','center','size'],0]],'Machine Learning':[['Why split data into train and test?',['to evaluate on unseen data','to make it smaller','to remove outliers'],0],['Classification predicts…',['categories','only numbers','nothing'],0]]};
+const ALL=[...new Set(Object.values(ROLES).flatMap(r=>r.req))];const SAMPLE={Python:2,SQL:1,HTML:2,CSS:2,JavaScript:1,Git:2};
+const $=i=>document.getElementById(i);
+$('role').innerHTML=Object.keys(ROLES).map(r=>`<option>${r}</option>`).join('');
+$('sk').innerHTML=ALL.map(s=>`<label>${s}<select data-s="${s}">${LV.map((l,i)=>`<option value="${i}" ${(SAMPLE[s]||0)==i?'selected':''}>${l}</option>`).join('')}</select></label>`).join('');
+const lv=()=>Object.fromEntries([...document.querySelectorAll('[data-s]')].map(e=>[e.dataset.s,+e.value]));
+let cur=null;
+$('clr').onclick=()=>document.querySelectorAll('[data-s]').forEach(e=>e.value=0);
+$('f').onsubmit=e=>{e.preventDefault();const m=$('m');m.className='msg';const L=lv();
+ if(!Object.values(L).some(v=>v>0)){m.textContent='Rate at least one skill above “Not yet” so there is something to analyze.';m.className='msg err show';return}
+ $('go').disabled=true;$('sp').classList.add('on');$('go').textContent='Analyzing…';
+ setTimeout(()=>{$('go').disabled=false;$('sp').classList.remove('on');$('go').textContent='Analyze my gap';show(L)},900)};
+function show(L){const role=$('role').value,R=ROLES[role];
+ const pts=R.req.reduce((a,s)=>a+Math.min(L[s],2),0),score=Math.round(pts/(R.req.length*2)*100);
+ const gaps=R.req.filter(s=>L[s]<2).sort((a,b)=>L[a]-L[b]);cur={role,gaps,L};
+ $('empty').style.display='none';$('res').classList.add('on');$('quiz').classList.remove('on');$('m2').className='msg';
+ $('ring').style.setProperty('--p',score);$('rv').textContent=score+'%';$('rt').textContent=`Readiness for ${role}`;
+ $('rs').textContent=gaps.length?`Target level is Intermediate. ${gaps.length} skill${gaps.length>1?'s':''} still below it.`:'You meet the Intermediate target for every required skill.';
+ $('gaps').innerHTML=R.req.map(s=>`<div style="margin:9px 0"><div class="row" style="justify-content:space-between;font-size:13px"><span>${s}</span><span class="pill ${L[s]>=2?'g':'y'}">${LV[L[s]]}${L[s]>=2?'':' → Intermediate'}</span></div><div class="bar"><i style="width:${Math.min(L[s],2)/2*100}%"></i></div></div>`).join('');
+ $('nx').textContent=gaps[0]?`${gaps[0]}: start with ${TOPIC[gaps[0]]}.`:'Pick a harder role or aim for Advanced in one skill.';
+ $('pj').textContent=R.proj;
+ $('rd').innerHTML=gaps.length?gaps.map(s=>`<li><b>${s}</b>: ${TOPIC[s]}</li>`).join('')+'<li>Finish with the recommended project above.</li>':'<li>Build the recommended project above.</li>';
+ $('qz').style.display=gaps.find(s=>QS[s])?'':'none';}
+$('sv').onclick=()=>{const m=$('m2');try{const t=`CareerGap roadmap – ${cur.role}\n`+cur.gaps.map((s,i)=>`${i+1}. ${s}: ${TOPIC[s]}`).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));a.download='roadmap.txt';a.click();m.textContent='Roadmap saved as roadmap.txt.';m.className='msg ok show'}catch{m.textContent='Could not save the roadmap. Try again.';m.className='msg err show'}};
+$('qz').onclick=()=>{const s=cur.gaps.find(x=>QS[x]),qs=QS[s];let i=0,c=0;$('quiz').classList.add('on');
+ const ask=()=>{if(i>=qs.length){$('qh').textContent=`${s} assessment result`;$('qb').innerHTML=`<p>You got <b>${c} of ${qs.length}</b> right in this sample quiz.</p>`;return}
+  const q=qs[i];$('qh').textContent=`${s} assessment · question ${i+1} of ${qs.length}`;$('qb').innerHTML=`<p>${q[0]}</p>`+q[1].map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('');
+  $('qb').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;b.classList.add(k==q[2]?'right':'wrong');if(k==q[2])c++;$('qb').querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(()=>{i++;ask()},700)})};ask();$('quiz').scrollIntoView({behavior:'smooth'})};
+</script></body></html>

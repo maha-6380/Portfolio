@@ -1,0 +1,46 @@
+/* ===== fx.css : 3D / futuristic layer (safe to delete this file + js/fx.js to go back) ===== */
+#progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:60;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));box-shadow:0 0 12px var(--cyan)}
+#cursor-ring{position:fixed;top:0;left:0;width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid rgba(85,229,255,.55);border-radius:50%;pointer-events:none;z-index:70;transition:width .25s,height .25s,margin .25s,background .25s,border-color .25s}
+#cursor-ring.big{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(85,229,255,.08);border-color:var(--purple)}
+@media(pointer:fine){body{cursor:none}a,button{cursor:none}}
+/* hero: perspective grid floor + 3D scene */
+.hero{position:relative;isolation:isolate}
+.hero:before{content:"";position:absolute;left:-10%;right:-10%;bottom:0;height:55%;z-index:-1;pointer-events:none;
+ background:linear-gradient(rgba(85,229,255,.16) 1px,transparent 1px) 0 0/100% 46px,linear-gradient(90deg,rgba(111,140,255,.16) 1px,transparent 1px) 0 0/60px 100%;
+ transform:perspective(520px) rotateX(62deg);transform-origin:bottom;animation:floor 3s linear infinite;
+ -webkit-mask-image:linear-gradient(transparent,#000 70%);mask-image:linear-gradient(transparent,#000 70%);opacity:.7}
+@keyframes floor{to{background-position:0 46px,0 0}}
+#heroFx{position:absolute;inset:-12%;width:124%;height:124%;pointer-events:none;z-index:0}
+.photo-frame{z-index:1}
+.photo-frame .scan{position:absolute;left:0;right:0;top:0;height:42px;z-index:3;pointer-events:none;background:linear-gradient(transparent,rgba(85,229,255,.22),transparent);border-bottom:1px solid rgba(85,229,255,.5);animation:scan 4.5s ease-in-out infinite}
+@keyframes scan{0%{transform:translateY(-60px);opacity:0}15%,85%{opacity:1}100%{transform:translateY(420px);opacity:0}}
+.photo-frame{animation:glowpulse 4s ease-in-out infinite}
+@keyframes glowpulse{50%{box-shadow:25px 25px 0 rgba(111,140,255,.05),0 0 70px rgba(85,229,255,.22),0 40px 100px rgba(0,0,0,.45)}}
+.frame-corner{animation:blink 2.6s ease-in-out infinite}@keyframes blink{50%{opacity:.25}}
+.floating-note{animation:bob 5s ease-in-out infinite}.note-bottom{animation-delay:-2.5s}
+@keyframes bob{50%{transform:translateY(-9px)}}
+/* chromatic glitch on the name, rarely */
+.hero h1{animation:glitch 7s steps(1) infinite}
+@keyframes glitch{0%,94%,100%{text-shadow:none}95%{text-shadow:3px 0 rgba(255,60,120,.7),-3px 0 rgba(85,229,255,.7)}97%{text-shadow:-2px 0 rgba(255,60,120,.7),2px 0 rgba(85,229,255,.7)}}
+/* spotlight + glare on 3D cards */
+.pcard,.cert-card,.skill-card,.journey-node,.edu-item,.timeline-card{position:relative;transform-style:preserve-3d}
+.fx-glare{position:absolute;inset:0;pointer-events:none;border-radius:inherit;opacity:0;transition:opacity .3s;z-index:4;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(85,229,255,.2),rgba(169,120,255,.08) 40%,transparent 70%)}
+.tilting>.fx-glare{opacity:1}
+.tilting{transition:transform .08s linear,border-color .3s!important}
+.skill-card{animation:float 6s ease-in-out infinite;animation-delay:calc(var(--i,0)*-.7s)}
+@keyframes float{50%{translate:0 -6px}}
+/* neon section headings */
+.section-heading{position:relative}
+.section-heading:after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));box-shadow:0 0 12px var(--cyan);transition:width 1.2s .2s}
+.section-heading.visible:after{width:100%}
+.section-heading h2{text-shadow:0 0 28px rgba(85,229,255,.12)}
+/* journey: energy flowing along connectors */
+.journey-path i{position:relative;overflow:hidden;opacity:.8}
+.journey-path i:after{content:"";position:absolute;inset:0;width:40%;background:linear-gradient(90deg,transparent,#fff,transparent);animation:flow 2s linear infinite}
+@keyframes flow{from{transform:translateX(-120%)}to{transform:translateX(320%)}}
+.journey-node.future{animation:glowpulse2 3s ease-in-out infinite}@keyframes glowpulse2{50%{box-shadow:0 0 30px rgba(169,120,255,.3)}}
+.mini-timeline .active span{text-shadow:0 0 16px var(--cyan)}
+.status-dot{animation:blink 1.6s infinite}
+@media(max-width:700px){.hero:before{height:35%}#heroFx{inset:-6%;width:112%;height:112%}.photo-frame .scan{animation-duration:6s}}
+@media(prefers-reduced-motion:reduce){.hero:before,.scan,.hero h1,.floating-note,.skill-card,.journey-path i:after{animation:none!important}}
+.floating-note{z-index:3}

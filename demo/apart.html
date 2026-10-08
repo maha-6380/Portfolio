@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>APART · Demo Preview</title><link rel="stylesheet" href="demo.css"></head><body>
+<div class="banner"><span><b>Sample Demo – Frontend Preview.</b> All animals, drugs and withdrawal days below are made-up illustrations, not real veterinary data and not the real APART backend.</span><a href="../index.html#projects">← Back to portfolio</a></div>
+<div class="wrap"><h1>APART</h1><p class="sub">Animal Product &amp; Antibiotic Residue Tracking · sample dashboard</p>
+<div class="grid"><form class="card" id="f"><h2>Record a treatment</h2><label>Animal</label><select id="an"></select><label>Drug (sample)</label><select id="dr"></select><label>Treatment date</label><input type="date" id="dt">
+<div class="row" style="margin-top:16px"><button class="btn" id="go">Save treatment</button><span class="spin" id="sp"></span></div><div class="msg" id="m"></div></form>
+<div class="card"><h2>Animals and compliance</h2><div class="row" style="margin-bottom:10px"><button class="btn alt" data-f="all">All</button><button class="btn alt" data-f="safe">Safe to sell</button><button class="btn alt" data-f="hold">In withdrawal</button></div><div class="scroll"><table><thead><tr><th>Tag</th><th>Species</th><th>Last drug</th><th>Safe from</th><th>Status</th></tr></thead><tbody id="tb"></tbody></table></div></div></div></div>
+<script>
+const $=i=>document.getElementById(i),D={'Sample-Drug A':3,'Sample-Drug B':7,'Sample-Drug C':10};
+const day=d=>d.toISOString().slice(0,10),add=(s,n)=>{const d=new Date(s);d.setDate(d.getDate()+n);return day(d)};
+const today=day(new Date());let A=[{t:'COW-101',s:'Cow',d:'Sample-Drug A',on:add(today,-9)},{t:'COW-102',s:'Cow',d:'Sample-Drug B',on:add(today,-2)},{t:'GOAT-07',s:'Goat',d:'Sample-Drug C',on:add(today,-12)},{t:'HEN-31',s:'Hen',d:null,on:null}],flt='all';
+$('an').innerHTML=A.map(a=>`<option>${a.t}</option>`).join('');$('dr').innerHTML=Object.keys(D).map(d=>`<option>${d}</option>`).join('');$('dt').value=today;$('dt').max=today;
+function draw(){$('tb').innerHTML=A.map(a=>{const from=a.d?add(a.on,D[a.d]):'—',safe=!a.d||from<=today;return{a,from,safe}}).filter(x=>flt=='all'||(flt=='safe')==x.safe).map(({a,from,safe})=>`<tr><td>${a.t}</td><td>${a.s}</td><td>${a.d||'None'}</td><td>${from}</td><td><span class="pill ${safe?'g':'r'}">${safe?'Safe to sell':'In withdrawal'}</span></td></tr>`).join('')||'<tr><td colspan=5>No animals match this filter.</td></tr>'}
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{flt=b.dataset.f;draw()});
+$('f').onsubmit=e=>{e.preventDefault();const m=$('m');m.className='msg';if(!$('dt').value){m.textContent='Choose a treatment date.';m.className='msg err show';return}
+ $('go').disabled=true;$('sp').classList.add('on');setTimeout(()=>{const a=A.find(x=>x.t==$('an').value);a.d=$('dr').value;a.on=$('dt').value;$('go').disabled=false;$('sp').classList.remove('on');draw();m.textContent=`Saved. ${a.t} is in withdrawal until ${add(a.on,D[a.d])} (sample data).`;m.className='msg ok show'},800)};draw();
+</script></body></html>
